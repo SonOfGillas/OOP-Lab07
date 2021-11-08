@@ -4,6 +4,7 @@
 package it.unibo.oop.lab.nesting1;
 
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import it.unibo.oop.lab.socialnetwork.SocialNetworkUserImpl;
@@ -53,12 +54,12 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      * TODO: initialize properly these sports
      */
     static {
-        SOCCER = null;
-        F1 = null;
-        MOTOGP = null;
-        VOLLEY = null;
-        BASKET = null;
-        BIKE = null;
+        SOCCER = new Sport("SOCCER");
+        F1 =  new Sport("F1");
+        MOTOGP =  new Sport("MOTOGP");
+        VOLLEY =  new Sport("VOLLEY");
+        BASKET =  new Sport("BASKET");
+        BIKE =  new Sport("BIKE");
     }
 
     /**
@@ -114,7 +115,7 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public void addSport(final Sport sport) {
-
+    	sports.add(sport);
     }
 
     /**
@@ -126,7 +127,7 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      */
     // TODO
     public boolean hasSport(final Sport s) {
-        return false;
+        return sports.contains(s);
     }
 
     /*
@@ -136,15 +137,36 @@ public class SportSocialNetworkUserImpl<U extends User> extends SocialNetworkUse
      * with its bare name.
      */
     public static final class Sport {
+    	
         /*
          * TODO
          * 
          * Redefine equals so that two sports are equal only if they feature the
          * very same name. Remember that you must also redefine hashCode()!
          */
+    	final String name;
+    	
+    	private Sport(String name) {
+    		this.name=name;
+    	}
+
+		@Override
+		public int hashCode() {
+			return Objects.hash(name);
+		}
+
+
         @Override
         public boolean equals(final Object o) {
-            return false;
+        	if(o instanceof Sport) {
+        		Sport sport = (Sport)o;
+                return name == sport.name;
+        	} 
+        	return false;
         }
+        
+    	
+        
+
     }
 }
